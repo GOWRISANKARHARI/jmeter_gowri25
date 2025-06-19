@@ -5,8 +5,6 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group_1" enabled="false">
@@ -35,8 +33,8 @@
           </collectionProp>
         </Arguments>
         <hashTree/>
-        <RandomController guiclass="RandomControlGui" testclass="RandomController" testname="launch" enabled="true">
-          <intProp name="InterleaveControl.style">1</intProp>
+        <RandomController guiclass="RandomControlGui" testclass="RandomController" testname="TG- 1 launch">
+          <intProp name="InterleaveControl.style">0</intProp>
         </RandomController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/-116" enabled="true">
@@ -116,8 +114,8 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <RandomController guiclass="RandomControlGui" testclass="RandomController" testname="Choose from and to city" enabled="true">
-          <intProp name="InterleaveControl.style">1</intProp>
+        <RandomController guiclass="RandomControlGui" testclass="RandomController" testname="TG - 1 Choose from and to city">
+          <intProp name="InterleaveControl.style">0</intProp>
         </RandomController>
         <hashTree>
           <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="false">
@@ -254,8 +252,8 @@ log.info(&quot;Chosen Arrival City: &quot; + toCity)</stringProp>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <RandomController guiclass="RandomControlGui" testclass="RandomController" testname="Choose flight" enabled="true">
-          <intProp name="InterleaveControl.style">1</intProp>
+        <RandomController guiclass="RandomControlGui" testclass="RandomController" testname="TG - 1 Choose flight">
+          <intProp name="InterleaveControl.style">0</intProp>
         </RandomController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/purchase.php-133" enabled="true">
@@ -381,7 +379,7 @@ log.info(&quot;Chosen Arrival City: &quot; + toCity)</stringProp>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group_2">
-        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.num_threads">5</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -403,7 +401,7 @@ log.info(&quot;Chosen Arrival City: &quot; + toCity)</stringProp>
           <stringProp name="variableNames">name,address,city,state,zipcode,nameoncard </stringProp>
         </CSVDataSet>
         <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="launch" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="TG - 2 launch">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
@@ -493,7 +491,7 @@ log.info(&quot;Chosen Arrival City: &quot; + toCity)</stringProp>
               <stringProp name="HtmlExtractor.extractor_impl">JSOUP</stringProp>
             </HtmlExtractor>
             <hashTree/>
-            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="XPath FROMCITY" enabled="true">
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="XPath FROMCITY">
               <stringProp name="XPathExtractor.default">NOT FOUND</stringProp>
               <stringProp name="XPathExtractor.refname">fromCity</stringProp>
               <stringProp name="XPathExtractor.matchNumber">0</stringProp>
@@ -515,7 +513,7 @@ log.info(&quot;Chosen Arrival City: &quot; + toCity)</stringProp>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Choose from and to city" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="TG - 2 Choose from and to city">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
@@ -588,7 +586,7 @@ log.info(&quot;Chosen Arrival City: &quot; + toCity)</stringProp>
               <stringProp name="parameters"></stringProp>
               <boolProp name="resetInterpreter">false</boolProp>
               <stringProp name="script">// Fetch the values of fromCity and toCity from JMeter variables
-String fromCity = vars.get(&quot;fromCity&quot;);
+try{String fromCity = vars.get(&quot;fromCity&quot;);
 String toCity = vars.get(&quot;toCity&quot;);
 
 // Log them to the JMeter log and View Results Tree
@@ -609,7 +607,9 @@ String route = response.substring(start, end);
 log.info(&quot;Extracted Route Info: &quot; + route);
 
 // Optionally save the route to a JMeter variable
-vars.put(&quot;routeInfo&quot;, route);
+vars.put(&quot;routeInfo&quot;, route);}catch(Exception e){
+	log.error(&quot;Error while extracting route info: &quot; + e.getMessage());
+	}
 </stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
@@ -684,7 +684,7 @@ vars.put(&quot;routeInfo&quot;, route);
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Choose flight" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="TG - 2 Choose flight">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
@@ -697,7 +697,7 @@ vars.put(&quot;routeInfo&quot;, route);
 import java.util.Random;
 
 // Get the HTML response from previous sampler
-String html = prev.getResponseDataAsString();
+try {String html = prev.getResponseDataAsString();
 
 // Parse HTML using Jsoup
 org.jsoup.nodes.Document doc = Jsoup.parse(html);
@@ -723,7 +723,11 @@ if (rows.isEmpty()) {
     vars.put(&quot;airline&quot;, airline);
     vars.put(&quot;price&quot;, priceText);
 
-    log.info(&quot;Chosen Random Flight → Flight#: &quot; + flightNo + &quot;, Airline: &quot; + airline + &quot;, Price: &quot; + priceText);
+    log.info(&quot;Chosen Random Flight -&gt; Flight#: &quot; + flightNo + &quot;, Airline: &quot; + airline + &quot;, Price: &quot; + priceText);
+}}catch(Exception e)
+{
+	log.error(&quot;Error in the flight &quot; + e.getMessage());
+}
 }
 </stringProp>
           </BeanShellPreProcessor>
@@ -889,7 +893,7 @@ if (rows.isEmpty()) {
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Fill the form" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="TG - 2 Fill the form">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
@@ -987,7 +991,7 @@ if (rows.isEmpty()) {
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor">
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
               <boolProp name="resetInterpreter">false</boolProp>
               <stringProp name="parameters"></stringProp>
               <stringProp name="filename"></stringProp>
@@ -1117,7 +1121,7 @@ if (response != null &amp;&amp; response.contains(&quot;Thank you for your purch
           <boolProp name="displaySystemProperties">false</boolProp>
         </DebugSampler>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -1154,44 +1158,7 @@ if (response != null &amp;&amp; response.contains(&quot;Thank you for your purch
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>true</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-              <sentBytes>true</sentBytes>
-              <url>true</url>
-              <threadCounts>true</threadCounts>
-              <idleTime>true</idleTime>
-              <connectTime>true</connectTime>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-        </ResultCollector>
-        <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
